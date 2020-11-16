@@ -1,0 +1,12 @@
+# Image captioning extra files/directories
+**/__pycache__/
+**/runs/
+*.pth.tar
+**/caption_data/
+
+# COCO and captioning generated files
+**/coco/
+**/models/
+**_baseline_results.json
+**results.zip
+**vocab.pkl
