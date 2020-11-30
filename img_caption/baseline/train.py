@@ -2,7 +2,7 @@
 Author: Kshirsagar, Krunal
 Date: 2020
 Availability: https://github.com/Noob-can-Compile/Automatic-Image-Captioning/
-Training image captioning model
+Training image captioning model and changed transforms to format for Inception V3
 """
 
 import sys
@@ -17,23 +17,26 @@ from data_loader import get_loader
 from model import EncoderCNN, DecoderRNN
 
 
+# Empty the CUDA cache
+torch.cuda.empty_cache()
+
 # Hyperparameters
-batch_size = 64
+batch_size = 128
 vocab_threshold = 5
 vocab_from_file = True
-embed_size = 300
+embed_size = 400
 hidden_size = 512
-num_epochs = 3
+num_epochs = 4
 save_every = 1
 print_every = 100
-lr = 0.001
+lr = 0.005
 log_file = "training_log.txt"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Transforms
 transform_train = transforms.Compose([
-    transforms.Resize(256),
-    transforms.RandomCrop(224),
+    transforms.Resize(328),
+    transforms.RandomCrop(299),
     transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
     transforms.Normalize((0.485, 0.456, 0.406),
@@ -58,7 +61,7 @@ decoder = DecoderRNN(embed_size, hidden_size, vocab_size).to(device)
 criterion = nn.CrossEntropyLoss().to(device)
 
 # The learnable parameters of the model
-params = list(encoder.embed.parameters()) + list(decoder.parameters())
+params = list(encoder.inception.fc.parameters()) + list(decoder.parameters())
 
 # Define the optimizer
 optimizer = torch.optim.Adam(params=params, lr=lr)
