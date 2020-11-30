@@ -2,12 +2,13 @@
 Author: Kshirsagar, Krunal
 Date: 2020
 Availability: https://github.com/Noob-can-Compile/Automatic-Image-Captioning/
-Refinements and edits added
+Changed so that Inception V3 is encoder CNN and other refinements
 """
 
 import torch
 import torch.nn as nn
 import torchvision.models as models
+
 
 class EncoderCNN(nn.Module):
     """
@@ -16,28 +17,22 @@ class EncoderCNN(nn.Module):
     def __init__(self, embed_size=1024):
         super(EncoderCNN, self).__init__()
 
-        # Using ResNet50 to encode images
-        resnet = models.resnet50(pretrained=True)
+        # Using Inception V3 to encode images
+        inception = models.inception_v3(pretrained=True)
 
         # Freezing model
-        for param in resnet.parameters():
+        for param in inception.parameters():
             param.requires_grad_(False)
 
-        # Remove linear layer for classification
-        modules = list(resnet.children())[:-1]
+        # Change last fully connected layer to encode to embed_size
+        inception.fc = nn.Linear(inception.fc.in_features, embed_size)
 
-        # Remake ResNet50 without last linear layer
-        self.resnet = nn.Sequential(*modules)
-        # For embedding image
-        self.embed = nn.Linear(resnet.fc.in_features, embed_size)
+        # Setting the encoding model
+        self.inception = inception
 
     def forward(self, images):
-        # Encode
-        features = self.resnet(images)
-        # Flatten
-        features = features.view(features.size(0), -1)
-        # Obtain features
-        features = self.embed(features)
+        # Encode the images
+        features = self.inception(images)[0]
 
         return features
 
