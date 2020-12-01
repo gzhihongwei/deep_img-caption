@@ -8,8 +8,6 @@ Creates testing captions and validation captions for COCO evaluation server
 import os
 import json
 import torch
-import numpy as np
-import matplotlib.pyplot as plt
 from data_loader import get_loader
 from model import EncoderCNN, DecoderRNN
 from torchvision import transforms
