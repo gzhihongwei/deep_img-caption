@@ -21,15 +21,15 @@ from model import EncoderCNN, DecoderRNN
 torch.cuda.empty_cache()
 
 # Hyperparameters
-batch_size = 128
+batch_size = 64
 vocab_threshold = 5
 vocab_from_file = True
-embed_size = 400
+embed_size = 300
 hidden_size = 512
-num_epochs = 4
+num_epochs = 3
 save_every = 1
 print_every = 100
-lr = 0.005
+lr = 0.001
 log_file = "training_log.txt"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
