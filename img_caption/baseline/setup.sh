@@ -1,4 +1,6 @@
 #!/bin/bash
+pip install torch
+pip install torchvision
 pip install numpy
 pip install pycocotools
 pip install nltk
