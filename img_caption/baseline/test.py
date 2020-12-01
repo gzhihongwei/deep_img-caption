@@ -57,13 +57,13 @@ def build_json(encoder, decoder, data_loader, device, filename):
             # Change to CUDA if possible
             image = image.to(device)
             # Add a dimension for timestep
-            features = encoder(image).unsqueeze(1)
+            features = encoder(image).unsqueeze(0).unsqueeze(1)
             # Sample the sentence from decoder
             output = decoder.sample(features)
             # Clean up sentence so that it is human readable
             sentence = clean_sentence(output, data_loader)
             # Add resulting caption with its image id
-            result.append({"image_id": img_id.item(), "captions": sentence})
+            result.append({"image_id": img_id.item(), "caption": sentence})
 
     # Dump into specified file
     with open(filename + ".json", "w") as f:
@@ -76,7 +76,11 @@ vocab_threshold = 5
 vocab_from_file = True
 embed_size = 300
 hidden_size = 512
+encoder_dir = "inception_encoder"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Navigate to encoder_dir
+os.chdir(encoder_dir)
 
 # Transformations
 transform_test = transforms.Compose([
@@ -114,13 +118,16 @@ encoder_file = "encoder-2.pkl"
 decoder_file = "decoder-2.pkl"
 
 # Load checkpoints
-encoder.load_state_dict(torch.load(os.path.join("./models", encoder_file)))
-decoder.load_state_dict(torch.load(os.path.join("./models", decoder_file)))
+encoder.load_state_dict(torch.load(os.path.join("models", encoder_file)))
+decoder.load_state_dict(torch.load(os.path.join("models", decoder_file)))
 
-# Make models directory
-if not os.path.exists("results"):
-    os.mkdir("results")
+# Make predictions subdirectory
+if not os.path.exists("predictions"):
+    os.mkdir("predictions")
+
+# Navigate to it
+os.chdir("predictions")
 
 # Building the output jsons for server evaluation
-build_json(encoder, decoder, val_loader, device, "results/captions_val2014_baseline_results")
-build_json(encoder, decoder, test_loader, device, "results/captions_test2014_baseline_results")
+build_json(encoder, decoder, val_loader, device, "captions_val2014_inception-baseline_results")
+build_json(encoder, decoder, test_loader, device, "captions_test2014_inception-baseline_results")

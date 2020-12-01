@@ -30,6 +30,7 @@ num_epochs = 3
 save_every = 1
 lr = 0.001
 logging_file = "training.log"
+encoder_dir = "inception_encoder"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Transforms
@@ -67,6 +68,13 @@ optimizer = torch.optim.Adam(params=params, lr=lr)
 
 # Set the total number of training steps per epoch.
 total_step = math.ceil(len(data_loader.dataset.caption_lengths) / data_loader.batch_sampler.batch_size)
+
+# Create new directory for encoder
+if not os.path.exists(encoder_dir):
+    os.mkdir(encoder_dir)
+
+# Change directory
+os.chdir(encoder_dir)
 
 # Make models directory
 if not os.path.exists("models"):
@@ -119,8 +127,8 @@ for epoch in range(num_epochs):
 
     # Save the weights
     if epoch % save_every == 0:
-        torch.save(decoder.state_dict(), os.path.join("./models", f"decoder-{epoch}.pkl"))
-        torch.save(encoder.state_dict(), os.path.join("./models", f"encoder-{epoch}.pkl"))
+        torch.save(decoder.state_dict(), os.path.join("models", f"decoder-{epoch}.pkl"))
+        torch.save(encoder.state_dict(), os.path.join("models", f"encoder-{epoch}.pkl"))
 
 # Close log
 f.close()
