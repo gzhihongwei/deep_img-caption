@@ -50,7 +50,7 @@ def get_loader(transform,
         assert mode == "train", "To generate vocab from captions file, must be in training mode (mode='train')."
 
     # Based on mode (train, val, test), obtain img_folder and annotations file.
-    if mode in {"train", "valid"}:
+    if mode == "train":
         if vocab_from_file:
             assert os.path.exists(vocab_file), \
                 "vocab_file does not exist. Change vocab_from_file to False to create vocab_file."
