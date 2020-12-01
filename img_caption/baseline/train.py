@@ -29,6 +29,7 @@ hidden_size = 512
 num_epochs = 3
 save_every = 1
 lr = 0.001
+logging_file = "training.log"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Transforms
@@ -70,6 +71,9 @@ total_step = math.ceil(len(data_loader.dataset.caption_lengths) / data_loader.ba
 # Make models directory
 os.mkdir("models")
 
+# Open loggin file
+f = open(logging_file, "w")
+
 for epoch in range(num_epochs):
     for i_step in range(total_step):
         # Randomly sample a caption length, and sample indices with that length.
@@ -108,7 +112,14 @@ for epoch in range(num_epochs):
         # Print stats
         print(stats)
 
+        # Print training statistics to file.
+        f.write(stats + '\n')
+        f.flush()
+
     # Save the weights
     if epoch % save_every == 0:
         torch.save(decoder.state_dict(), os.path.join("./models", f"decoder-{epoch}.pkl"))
         torch.save(encoder.state_dict(), os.path.join("./models", f"encoder-{epoch}.pkl"))
+
+# Close log
+f.close()
