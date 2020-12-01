@@ -72,7 +72,7 @@ total_step = math.ceil(len(data_loader.dataset.caption_lengths) / data_loader.ba
 if not os.path.exists("models"):
     os.mkdir("models")
 
-# Open loggin file
+# Open logging file
 f = open(logging_file, "w")
 
 for epoch in range(num_epochs):
