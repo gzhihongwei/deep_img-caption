@@ -69,6 +69,9 @@ optimizer = torch.optim.Adam(params=params, lr=lr)
 # Set the total number of training steps per epoch.
 total_step = math.ceil(len(data_loader.dataset.caption_lengths) / data_loader.batch_sampler.batch_size)
 
+# Make models directory
+os.mkdir("models")
+
 # Opening the training log file.
 f = open(log_file, "w")
 
