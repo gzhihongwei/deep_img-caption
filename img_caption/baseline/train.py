@@ -69,7 +69,8 @@ optimizer = torch.optim.Adam(params=params, lr=lr)
 total_step = math.ceil(len(data_loader.dataset.caption_lengths) / data_loader.batch_sampler.batch_size)
 
 # Make models directory
-os.mkdir("models")
+if not os.path.exists("models"):
+    os.mkdir("models")
 
 # Open loggin file
 f = open(logging_file, "w")
