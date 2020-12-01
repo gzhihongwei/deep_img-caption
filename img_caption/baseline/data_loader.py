@@ -13,7 +13,6 @@ import torch.utils.data as data
 from vocabulary import Vocabulary
 from PIL import Image
 from pycocotools.coco import COCO
-from tqdm import tqdm
 
 
 def get_loader(transform,
@@ -127,7 +126,7 @@ class CoCoDataset(data.Dataset):
 
             all_tokens = [
                 nltk.tokenize.word_tokenize(str(self.coco.anns[self.ids[index]]['caption']).lower())
-                for index in tqdm(np.arange(len(self.ids)))
+                for index in np.arange(len(self.ids))
             ]
 
             self.caption_lengths = [len(token) for token in all_tokens]
