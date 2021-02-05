@@ -1,10 +1,3 @@
-"""Title: Automatic-Image-Captioning
-Author: Kshirsagar, Krunal
-Date: 2020
-Availability: https://github.com/Noob-can-Compile/Automatic-Image-Captioning/
-Creates testing captions and validation captions for COCO evaluation server
-"""
-
 import os
 import json
 import torch

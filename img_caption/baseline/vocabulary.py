@@ -1,10 +1,3 @@
-"""Title: Automatic-Image-Captioning
-Author: Kshirsagar, Krunal
-Date: 2020
-Availability: https://github.com/Noob-can-Compile/Automatic-Image-Captioning/
-For generating vocabulary given the captions
-"""
-
 import nltk
 import pickle
 import os.path

@@ -1,10 +1,3 @@
-"""Title: Automatic-Image-Captioning
-Author: Kshirsagar, Krunal
-Date: 2020
-Availability: https://github.com/Noob-can-Compile/Automatic-Image-Captioning/
-Refined some statements and handled data loading for test and validation sets
-"""
-
 import nltk
 import numpy as np
 import os
