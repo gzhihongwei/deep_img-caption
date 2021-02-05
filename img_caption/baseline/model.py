@@ -1,10 +1,3 @@
-"""Title: Automatic-Image-Captioning
-Author: Kshirsagar, Krunal
-Date: 2020
-Availability: https://github.com/Noob-can-Compile/Automatic-Image-Captioning/
-Changed so that Inception V3 is encoder CNN and other refinements
-"""
-
 import torch
 import torch.nn as nn
 import torchvision.models as models
@@ -43,7 +36,8 @@ class DecoderRNN(nn.Module):
         # For embedding the words
         self.embedding_layer = nn.Embedding(vocab_size, embed_size)
         # Main decoder
-        self.lstm = nn.LSTM(input_size=embed_size, hidden_size=hidden_size, num_layers=num_layers, batch_first=True)
+        self.lstm = nn.LSTM(input_size=embed_size, hidden_size=hidden_size,
+                            num_layers=num_layers, batch_first=True, bidirectional=True)
         # For identifying which word in vocab to pick
         self.linear = nn.Linear(hidden_size, vocab_size)
 
