@@ -1,11 +1,3 @@
-"""Title: Automatic-Image-Captioning
-Author: Kshirsagar, Krunal
-Date: 2020
-Availability: https://github.com/Noob-can-Compile/Automatic-Image-Captioning/
-Training image captioning model and changed transforms to format for Inception V3
-"""
-
-import sys
 import math
 import torch
 import os
@@ -21,14 +13,14 @@ from model import EncoderCNN, DecoderRNN
 torch.cuda.empty_cache()
 
 # Hyperparameters
-batch_size = 64
+batch_size = 128
 vocab_threshold = 5
 vocab_from_file = True
-embed_size = 300
-hidden_size = 512
+embed_size = 400
+hidden_size = 768
 num_epochs = 3
 save_every = 1
-lr = 0.001
+lr = 0.003
 logging_file = "training.log"
 encoder_dir = "inception_encoder"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
