@@ -39,7 +39,7 @@ class DecoderRNN(nn.Module):
         self.lstm = nn.LSTM(input_size=embed_size, hidden_size=hidden_size,
                             num_layers=num_layers, batch_first=True, bidirectional=True)
         # For identifying which word in vocab to pick
-        self.linear = nn.Linear(hidden_size, vocab_size)
+        self.linear = nn.Linear(2*hidden_size, vocab_size)
 
     def forward(self, features, captions):
         # Exclude last word
