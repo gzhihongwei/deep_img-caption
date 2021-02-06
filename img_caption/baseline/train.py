@@ -65,12 +65,12 @@ total_step = math.ceil(len(data_loader.dataset.caption_lengths) / data_loader.ba
 if not os.path.exists(encoder_dir):
     os.mkdir(encoder_dir)
 
-# Change directory
-os.chdir(encoder_dir)
+# Model Checkpoints directory
+model_dir = os.path.join(encoder_dir, "models")
 
 # Make models directory
-if not os.path.exists("models"):
-    os.mkdir("models")
+if not os.path.exists(model_dir):
+    os.mkdir(model_dir)
 
 # Open logging file
 f = open(logging_file, "w")
@@ -119,8 +119,8 @@ for epoch in range(num_epochs):
 
     # Save the weights
     if epoch % save_every == 0:
-        torch.save(decoder.state_dict(), os.path.join("models", f"decoder-{epoch}.pkl"))
-        torch.save(encoder.state_dict(), os.path.join("models", f"encoder-{epoch}.pkl"))
+        torch.save(decoder.state_dict(), os.path.join(model_dir, f"decoder-{epoch}.pkl"))
+        torch.save(encoder.state_dict(), os.path.join(model_dir, f"encoder-{epoch}.pkl"))
 
 # Close log
 f.close()

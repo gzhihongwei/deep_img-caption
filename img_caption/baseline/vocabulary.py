@@ -1,6 +1,6 @@
 import nltk
 import pickle
-import os.path
+import os
 from pycocotools.coco import COCO
 from collections import Counter
 
