@@ -1,6 +1,7 @@
 import math
 import torch
 import os
+import glob
 import numpy as np
 import torch.nn as nn
 import torch.utils.data as data
@@ -16,6 +17,7 @@ torch.cuda.empty_cache()
 batch_size = 128
 vocab_threshold = 5
 vocab_from_file = True
+load_checkpoint = True
 embed_size = 400
 hidden_size = 768
 num_epochs = 3
@@ -73,7 +75,21 @@ if not os.path.exists(model_dir):
     os.mkdir(model_dir)
 
 # Open logging file
-f = open(logging_file, "w")
+f = open(os.path.join(model_dir, logging_file), "w")
+
+# Train from latest checkpoint
+if load_checkpoint:
+    # Get the latest encoder checkpoint
+    encoder_files = glob.glob(os.path.join(model_dir, "encoder-?.pkl"))
+    encoder_file = max(encoder_files, key=os.path.getctime)
+
+    # Get the latest decoder checkpoint
+    decoder_files = glob.glob(os.path.join(model_dir, "decoder-?.pkl"))
+    decoder_file = max(decoder_files, key=os.path.getctime)
+
+    # Load state dicts from checkpoints
+    encoder.load_state_dict(torch.load(os.path.join(model_dir, encoder_file)))
+    decoder.load_state_dict(torch.load(os.path.join(model_dir, decoder_file)))
 
 for epoch in range(num_epochs):
     for i_step in range(total_step):
