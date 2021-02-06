@@ -75,7 +75,7 @@ if not os.path.exists(model_dir):
     os.mkdir(model_dir)
 
 # Open logging file
-f = open(os.path.join(model_dir, logging_file), "w")
+f = open(os.path.join(encoder_dir, logging_file), "w")
 
 # Train from latest checkpoint
 if load_checkpoint:
