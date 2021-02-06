@@ -88,8 +88,8 @@ if load_checkpoint:
     decoder_file = max(decoder_files, key=os.path.getctime)
 
     # Load state dicts from checkpoints
-    encoder.load_state_dict(torch.load(os.path.join(model_dir, encoder_file)))
-    decoder.load_state_dict(torch.load(os.path.join(model_dir, decoder_file)))
+    encoder.load_state_dict(torch.load(encoder_file))
+    decoder.load_state_dict(torch.load(decoder_file))
 
 for epoch in range(num_epochs):
     for i_step in range(total_step):
