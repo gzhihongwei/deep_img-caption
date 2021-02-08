@@ -67,8 +67,8 @@ def build_json(encoder, decoder, data_loader, device, filename):
 batch_size = 1
 vocab_threshold = 5
 vocab_from_file = True
-embed_size = 300
-hidden_size = 512
+embed_size = 400
+hidden_size = 768
 encoder_dir = "inception_encoder"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
