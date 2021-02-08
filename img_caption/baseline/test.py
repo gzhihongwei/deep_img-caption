@@ -117,13 +117,13 @@ decoder_file = "decoder-0.pkl"
 encoder.load_state_dict(torch.load(os.path.join(model_dir, encoder_file)))
 decoder.load_state_dict(torch.load(os.path.join(model_dir, decoder_file)))
 
-# Make predictions subdirectory
-if not os.path.exists("predictions"):
-    os.mkdir("predictions")
+# Predictions directory
+prediction_dir = os.path.join(encoder_dir, "predictions")
 
-# Navigate to it
-os.chdir("predictions")
+# Make predictions subdirectory
+if not os.path.exists(prediction_dir):
+    os.mkdir(prediction_dir)
 
 # Building the output jsons for server evaluation
-build_json(encoder, decoder, val_loader, device, "captions_val2014_inception-bidirectional_results")
-build_json(encoder, decoder, test_loader, device, "captions_test2014_inception-bidirectional_results")
+build_json(encoder, decoder, val_loader, device, os.path.join(prediction_dir, "captions_val2014_inception-bidirectional_results"))
+build_json(encoder, decoder, test_loader, device, os.path.join(prediction_dir,"captions_test2014_inception-bidirectional_results"))
