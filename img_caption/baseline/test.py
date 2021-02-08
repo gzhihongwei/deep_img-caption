@@ -107,8 +107,8 @@ encoder.to(device)
 decoder.to(device)
 
 # Saved checkpoints
-encoder_file = "encoder-2.pkl"
-decoder_file = "decoder-2.pkl"
+encoder_file = "encoder-0.pkl"
+decoder_file = "decoder-0.pkl"
 
 # Load checkpoints
 encoder.load_state_dict(torch.load(os.path.join("models", encoder_file)))
@@ -122,5 +122,5 @@ if not os.path.exists("predictions"):
 os.chdir("predictions")
 
 # Building the output jsons for server evaluation
-build_json(encoder, decoder, val_loader, device, "captions_val2014_inception-baseline_results")
-build_json(encoder, decoder, test_loader, device, "captions_test2014_inception-baseline_results")
+build_json(encoder, decoder, val_loader, device, "captions_val2014_inception-bidirectional_results")
+build_json(encoder, decoder, test_loader, device, "captions_test2014_inception-bidirectional_results")
