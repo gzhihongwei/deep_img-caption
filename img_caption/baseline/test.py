@@ -72,9 +72,6 @@ hidden_size = 512
 encoder_dir = "inception_encoder"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Navigate to encoder_dir
-os.chdir(encoder_dir)
-
 # Transformations
 transform_test = transforms.Compose([
     transforms.Resize(328),
@@ -106,13 +103,19 @@ decoder = DecoderRNN(embed_size, hidden_size, vocab_size)
 encoder.to(device)
 decoder.to(device)
 
+# Encoder directory
+encoder_dir = "inception_encoder"
+
+# Model checkpoint directory
+model_dir = os.path.join(encoder_dir, "models")
+
 # Saved checkpoints
 encoder_file = "encoder-0.pkl"
 decoder_file = "decoder-0.pkl"
 
 # Load checkpoints
-encoder.load_state_dict(torch.load(os.path.join("models", encoder_file)))
-decoder.load_state_dict(torch.load(os.path.join("models", decoder_file)))
+encoder.load_state_dict(torch.load(os.path.join(model_dir, encoder_file)))
+decoder.load_state_dict(torch.load(os.path.join(model_dir, decoder_file)))
 
 # Make predictions subdirectory
 if not os.path.exists("predictions"):
